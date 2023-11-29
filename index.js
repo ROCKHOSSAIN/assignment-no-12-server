@@ -55,6 +55,24 @@ async function run() {
         const result = await usercollection.find().toArray()
         res.send(result)
       })
+      //profile update
+      app.put('/allUser/:email',async(req,res)=>{
+        const item = req.body;
+        const email = req.params.email;
+        const filter = {email :email}
+        const updatedDoc = {
+          $set:{
+            name:item.name,
+            district:item.district,
+            upazila:item.upazila,
+            bloodGroup:item.bloodGroup,
+            imageUrl: item.imageUrl
+          }
+        }
+        const result = await usercollection.updateOne(filter,updatedDoc)
+        res.send(result)
+      })
+
       //donor request
       app.post('/donorRequest', async (req, res) => {
         const allUsers = req.body;
@@ -102,6 +120,19 @@ async function run() {
         const result = await donorRequestcollection.deleteOne(query)
         res.send(result)
   
+      })
+
+      //
+      app.get('/donorRequest', async(req, res) => {
+        // console.log('query',req.query.page)
+        const page = parseInt(req.query.page)
+        const size = parseInt(req.query.size)
+        console.log(page,size)
+          const result = await productCollection.find()
+          .skip(page*size)
+          .limit(size)
+          .toArray();
+          res.send(result);
       })
 
     // Send a ping to confirm a successful connection
