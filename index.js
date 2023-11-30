@@ -55,6 +55,67 @@ async function run() {
         const result = await usercollection.find().toArray()
         res.send(result)
       })
+      //make admin
+      app.patch('/allUser/admin/:id', async (req, res) => {
+        const id = req.params.id
+        const filter = { _id: new ObjectId(id) }
+        const updatedDoc = {
+          $set: {
+            role: 'Admin'
+          }
+        }
+        const result = await usercollection.updateOne(filter, updatedDoc)
+        res.send(result)
+      })
+      //make Volunteer
+      app.patch('/allUser/volunteer/:id', async (req, res) => {
+        const id = req.params.id
+        const filter = { _id: new ObjectId(id) }
+        const updatedDoc = {
+          $set: {
+            role: 'Volunteer'
+          }
+        }
+        const result = await usercollection.updateOne(filter, updatedDoc)
+        res.send(result)
+      })
+      app.patch('/allUser/block/:id', async (req, res) => {
+        const id = req.params.id
+        const filter = { _id: new ObjectId(id) }
+        const updatedDoc = {
+          $set: {
+            status: 'block'
+          }
+        }
+        const result = await usercollection.updateOne(filter, updatedDoc)
+        res.send(result)
+      })
+      app.patch('/allUser/unblock/:id', async (req, res) => {
+        const id = req.params.id
+        const filter = { _id: new ObjectId(id) }
+        const updatedDoc = {
+          $set: {
+            status: 'unblock'
+          }
+        }
+        const result = await usercollection.updateOne(filter, updatedDoc)
+        res.send(result)
+      })
+        // verify admin or not
+    // app.get('/allUser/admin/:email', async (req, res) => {
+    //   const email = req.params.email;
+     
+    //   if (email !== req.decoded.email) {
+    //     return res.status(403).send({ message: 'forbidden access' })
+    //   }
+    //   const query = { email: email }
+    //   const user = await usercollection.findOne(query);
+    //   let admin = false;
+    //   if (user) {
+    //     admin = user?.role === 'Admin'
+    //   }
+    //   res.send({ admin });
+    // })
       //profile update
       app.put('/allUser/:email',async(req,res)=>{
         const item = req.body;
