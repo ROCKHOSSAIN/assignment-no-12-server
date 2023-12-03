@@ -7,11 +7,14 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 //middleware;
-app.use(cors({
-    origin: [
-      'http://localhost:5173',
-    ],
-  }));
+// app.use(cors({
+//     // origin: [
+//     //   'http://localhost:5173',
+//     //   'https://assignment-no-12-server.vercel.app',
+
+//     // ],
+//   }));
+app.use(cors())
 app.use(express.json());
 
 //bloodDonation
@@ -30,7 +33,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     const usercollection = client.db('bloodDonation').collection('allUsers')
     const donorRequestcollection = client.db('bloodDonation').collection('donationRequest')
 
@@ -197,8 +200,8 @@ async function run() {
       })
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    // await client.db("admin").command({ ping: 1 });
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
